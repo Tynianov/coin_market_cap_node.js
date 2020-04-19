@@ -12,6 +12,6 @@ const apiRoute = '/api/v1';
 router.get(apiRoute+'/currency-list', apiControllers.getCurrenciesList)
 router.get(apiRoute+'/currency-metadata/:id', apiControllers.getCurrencyMetadata)
 router.get(apiRoute+'/currency-quotes/:id', apiControllers.getCurrencyQuotes)
-router.get(apiRoute+'/test/:id', apiControllers.testController)
+router.get(apiRoute+'/convert', apiControllers.convertCurrency)
 
 module.exports = router;

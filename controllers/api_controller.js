@@ -64,7 +64,20 @@ module.exports.getCurrencyQuotes = function (req, res) {
         res.json({error: err.message})
     });
 }
-module.exports.testController = function (req, res) {
-    let id = req.params.id;
-    res.json({id: id})
+module.exports.convertCurrency = function (req, res) {
+    requestOptions.url = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion';
+    let amount = req.query.amount;
+    let convert = req.query.convert;
+    let id = req.query.id;
+    requestOptions.qs = {
+        'id': id,
+        'amount': amount,
+        'convert': convert
+    }
+    rp(requestOptions).then(response => {
+        let price = response.data.quote[convert].price.toFixed(2);
+        res.json({price: price})
+    }).catch(err => {
+        res.json({error: err})
+    })
 }

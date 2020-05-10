@@ -13,7 +13,7 @@ module.exports.getCurrenciesList = function (req, res) {
     requestOptions.qs = {
                             limit: 50
                         };
-    requestOptions.uri = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
+    requestOptions.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
     rp(requestOptions).then(response => {
         let result = [];
         response.data.forEach(coin => {
@@ -37,8 +37,9 @@ module.exports.getCurrenciesList = function (req, res) {
 module.exports.getCurrencyMetadata = function (req, res) {
     requestOptions.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/info';
     requestOptions.qs = {
-        'id': parseInt(req.params.id)
+        'id': +req.params.id
     }
+    console.log(requestOptions)
     rp(requestOptions).then(response => {
         let metadata = response.data[req.params.id]
         res.json({result: metadata})
@@ -50,7 +51,7 @@ module.exports.getCurrencyMetadata = function (req, res) {
 module.exports.getCurrencyQuotes = function (req, res) {
     requestOptions.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
     requestOptions.qs = {
-        'id': parseInt(req.params.id)
+        'id': +req.params.id
     }
     rp(requestOptions).then(response => {
         let data = response.data[req.params.id]
@@ -70,7 +71,7 @@ module.exports.convertCurrency = function (req, res) {
     let convert = req.query.convert;
     let id = req.query.id;
     requestOptions.qs = {
-        'id': id,
+        'id': +id,
         'amount': amount,
         'convert': convert
     }
